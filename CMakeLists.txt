@@ -31,16 +31,18 @@ else()
 endif()
 
 # =========== unit tests ===================
-if(GOOGLE_TEST_PATH)
-  message(STATUS "GOOGLE_TEST_PATH is set to: ${GOOGLE_TEST_PATH}")
-  find_package(GTest REQUIRED PATHS ${GOOGLE_TEST_PATH} NO_SYSTEM_ENVIRONMENT_PATH)
-else()
-  find_package(GTest REQUIRED)
-endif()
-
-include(GoogleTest)
 include(CTest)
-include(gtest)
+if(BUILD_TESTING)
+  if(GOOGLE_TEST_PATH)
+    message(STATUS "GOOGLE_TEST_PATH is set to: ${GOOGLE_TEST_PATH}")
+    find_package(GTest REQUIRED PATHS ${GOOGLE_TEST_PATH} NO_SYSTEM_ENVIRONMENT_PATH)
+  else()
+    find_package(GTest REQUIRED)
+  endif()
+
+  include(GoogleTest)
+  include(gtest)
+endif()
 
 # =========== modules ===================
 add_subdirectory(source/modules)
